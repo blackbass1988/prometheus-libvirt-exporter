@@ -159,6 +159,8 @@ var (
 		nil,
 	)
 
+	withoutDomainTitle = false
+
 	domainState = map[libvirt_schema.DomainState]string{
 		libvirt_schema.DOMAIN_NOSTATE:     "no state",
 		libvirt_schema.DOMAIN_RUNNING:     "the domain is running",
@@ -351,6 +353,9 @@ func CollectDomain(ch chan<- prometheus.Metric, l *libvirt.Libvirt, domain domai
 
 func CollectDomainMetaTitleInfo(ch chan<- prometheus.Metric, l *libvirt.Libvirt, domain domainMeta, labels []string) (err error) {
 
+	if withoutDomainTitle {
+		return nil
+	}
 	// https://libvirt.org/html/libvirt-libvirt-domain.html
 	const (
 		// VIR_DOMAIN_METADATA_TITLE
@@ -581,6 +586,7 @@ func main() {
 		libvirtURI    = flag.String("libvirt.uri", "/var/run/libvirt/libvirt-sock-ro", "Libvirt URI from which to extract metrics.")
 		driver        = flag.String("libvirt.driver", string(libvirt.QEMUSystem), fmt.Sprintf("Available drivers: %s (Default), %s, %s and %s ", libvirt.QEMUSystem, libvirt.QEMUSession, libvirt.XenSystem, libvirt.TestDefault))
 	)
+	flag.BoolVar(&withoutDomainTitle, "no-collector.domain-title", false, "Exposes title of domain")
 	flag.Parse()
 
 	exporter, err := NewLibvirtExporter(*libvirtURI, libvirt.ConnectURI(*driver))
