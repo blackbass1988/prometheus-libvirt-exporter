@@ -6,9 +6,13 @@ env:
 
 tasks:
   build:
-    desc: Build project
+    desc: Build app
+    cmds:
+      - go build --ldflags '-extldflags "-static"' prometheus-libvirt-exporter.go
+  package:
+    desc: Build and make dist
     env:
       EXPORTER_VERSION:
         sh: cat VERSION
     cmds:
-      - goreleaser release --rm-dist --snapshot
+      - goreleaser release --clean --snapshot

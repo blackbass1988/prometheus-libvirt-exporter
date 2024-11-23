@@ -1,4 +1,5 @@
 project_name: prometheus-libvirt-exporter
+version: 2
 before:
   hooks:
     - go mod tidy
@@ -11,6 +12,7 @@ builds:
     flags:
       - -v
     ldflags:
+      - -extldflags "-static"
       - -w -s
       - -X {{ .ProjectName }}/meta.Version={{ .Env.EXPORTER_VERSION }}
     goos:
@@ -31,11 +33,15 @@ dockers:
 nfpms:
   - id: "prometheus-libvirt-exporter"
     package_name: "prometheus-libvirt-exporter"
-    file_name_template: prometheus-libvirt-exporter-{{ .Env.EXPORTER_VERSION }}.{{ .Arch }}
     builds:
       - prometheus-libvirt-exporter
-    replacements:
-      amd64: x86_64
+    file_name_template: >-
+      {{- .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end -}}
     maintainer: "zhangjianweibj"
     description: |
       Prometheus-libvirt-exporter service (host and vm metrics exposed for prometheus, written in Go with pluggable metric collectors)
