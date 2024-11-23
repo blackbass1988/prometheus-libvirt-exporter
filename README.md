@@ -31,29 +31,29 @@ By default, this exporter listens on TCP port 9000,Path '/metrics',to expose met
 
 
 ## metrics
-Name | Label |Description
----------|---------|-------------
-up|"host"|scraping libvirt's metrics state
-domains_number|"host"|get number of domains
-domain_state_code|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "stateDesc", "host"|code of the domain state,include state description
-maximum_memory_bytes|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"|Maximum allowed memory of the domain, in bytes
-memory_usage_bytes|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"|Memory usage of the domain, in bytes
-virtual_cpus|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"|Number of virtual CPUs for the domain
-cpu_time_seconds_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"|Amount of CPU time used by the domain, in seconds
-read_bytes_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"|Number of bytes read from a block device, in bytes
-read_requests_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"|Number of read requests from a block device
-write_bytes_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"|Number of bytes written from a block device, in bytes
-write_requests_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"|Number of write requests from a block device
-receive_bytes_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of bytes received on a network interface, in bytes
-receive_packets_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of packets received on a network interface
-receive_errors_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of packet receive errors on a network interface
-receive_drops_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of packet receive drops on a network interface
-transmit_bytes_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of bytes transmitted on a network interface, in bytes
-transmit_packets_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of packets transmitted on a network interface
-transmit_errors_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of packet transmit errors on a network interface
-transmit_drops_total|"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host"|Number of packet transmit drops on a network interface
-
-
+| Name                   | Label                                                                                                                                            | Description                                                  |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| up                     | "host"                                                                                                                                           | scraping libvirt's metrics state                             |
+| domains_number         | "host"                                                                                                                                           | get number of domains                                        |
+| domain_state_code      | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "stateDesc", "host"                      | code of the domain state,include state description           |
+| maximum_memory_bytes   | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"                                   | Maximum allowed memory of the domain, in bytes               |
+| memory_usage_bytes     | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"                                   | Memory usage of the domain, in bytes                         |
+| virtual_cpus           | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"                                   | Number of virtual CPUs for the domain                        |
+| cpu_time_seconds_total | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host"                                   | Amount of CPU time used by the domain, in seconds            |
+| read_bytes_total       | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"   | Number of bytes read from a block device, in bytes           |
+| read_requests_total    | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"   | Number of read requests from a block device                  |
+| write_bytes_total      | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"   | Number of bytes written from a block device, in bytes        |
+| write_requests_total   | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_file", "target_device", "host"   | Number of write requests from a block device                 |
+| receive_bytes_total    | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of bytes received on a network interface, in bytes    |
+| receive_packets_total  | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packets received on a network interface            |
+| receive_errors_total   | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packet receive errors on a network interface       |
+| receive_drops_total    | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packet receive drops on a network interface        |
+| transmit_bytes_total   | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of bytes transmitted on a network interface, in bytes |
+| transmit_packets_total | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packets transmitted on a network interface         |
+| transmit_errors_total  | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packet transmit errors on a network interface      |
+| transmit_drops_total   | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packet transmit drops on a network interface       |
+| transmit_drops_total   | "domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "source_bridge", "target_device", "host" | Number of packet transmit drops on a network interface       |
+| title                  | "domain", "title"                                                                                                                                | title of domain                                              | 
 ## Example
 
 ```
@@ -77,5 +77,5 @@ libvirt_domain_interface_stats_transmit_packets_total{domain="instance-00006a4c"
 libvirt_domain_state_code{domain="instance-0000722f",host="cmp001.inspurcloud.com",instanceId="7d1***d-f95d-45a7-af99-8b6d917c1bda",instanceName="retrytest",flavorName="c1.micro",projectId="766***a6c648068d082c467e88fba6",projectName="gaoss",stateDesc="the domain is running",userId="0d4***7463b45a0b9c882c3355ac341",userName="gaoss"} 1
 libvirt_domain_state_code{domain="instance-000074ed",host="cmp001.inspurcloud.com",instanceId="53**4-f150-45f8-bba0-009cd47e1013",instanceName="SLB-POD-yaoyifei-test-1",flavorName="c1.micro",projectId="3b5c57d610**bbb6361807ae1368c",projectName="hk",stateDesc="the domain is running",userId="ed5**f0445387e2914f46e96e0c",userName="1***-e7cf-406d-8f49-da9883e4546e"} 1
 libvirt_domain_state_code{domain="instance-000074f0",host="cmp001.inspurcloud.com",instanceId="e**db-f688-4460-81a5-9a6383bb1399",instanceName="ECS-201922695542",flavorName="c1.micro",projectId="8**c4247c3a1841e5ff43d0d88",projectName="z**an",stateDesc="the domain is running",userId="068***603b49a485b39d33ac4ba80e",userName="2***-cacf-4447-ba2e-ee42ab125148"} 1
-
+libvirt_metadata_title{domain="foo-machine",title="some-title"} 1
 ```
