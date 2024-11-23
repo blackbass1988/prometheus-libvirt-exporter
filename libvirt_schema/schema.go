@@ -6,6 +6,7 @@ type Domain struct {
 	Devices  Devices  `xml:"devices"`
 	Name     string   `xml:"name"`
 	UUID     string   `xml:"uuid"`
+	Title    string   `xml:"title"`
 	Metadata Metadata `xml:"metadata"`
 }
 
@@ -14,9 +15,9 @@ type Metadata struct {
 }
 
 type NovaInstance struct {
-	XMLName xml.Name  `xml:"instance"`
-	Name    string    `xml:"name"`
-	Owner   NovaOwner `xml:"owner"`
+	XMLName xml.Name   `xml:"instance"`
+	Name    string     `xml:"name"`
+	Owner   NovaOwner  `xml:"owner"`
 	Flavor  NovaFlavor `xml:"flavor"`
 }
 
