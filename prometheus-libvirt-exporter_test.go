@@ -25,6 +25,7 @@ func TestUnmarshal(t *testing.T) {
 <domain type='kvm'>
   <name>instance-00000212</name>
   <uuid>a6b57d2e-dad0-4860-9104-6eb072935126</uuid>
+  <title>meta-title</title>
   <metadata>
     <nova:instance xmlns:nova="http://openstack.org/xmlns/libvirt/nova/1.0">
       <nova:package version="15.0.4-1.el7"/>
@@ -155,9 +156,10 @@ func TestUnmarshal(t *testing.T) {
 	if err != nil {
 		fmt.Println(err, r)
 	}
-	assert.Equal(nil, r.Metadata.NovaInstance.Name, "LqnyzNfe")
-	assert.Equal(nil, r.Metadata.NovaInstance.Flavor.FlavorName, "c1.micro")
+	assert.Equal(t, r.Metadata.NovaInstance.Name, "LqnyzNfe")
+	assert.Equal(t, r.Metadata.NovaInstance.Flavor.FlavorName, "c1.micro")
 	fmt.Printf("xml name=%#v\n", r.Metadata.NovaInstance.XMLName)
 	fmt.Printf("nova name=%#v\n", r.Metadata.NovaInstance.Name)
 	fmt.Printf("nova =%#v\n", r.Metadata)
+	assert.Equal(t, r.Title, "meta-title")
 }

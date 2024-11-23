@@ -1,9 +1,11 @@
 package main
 
+import "C"
 import (
 	"encoding/xml"
 	"flag"
 	"fmt"
+	"github.com/digitalocean/go-libvirt/socket/dialers"
 	"net"
 	"net/http"
 	"time"
@@ -150,6 +152,13 @@ var (
 		[]string{"domain", "instanceName", "instanceId", "flavorName", "userName", "userId", "projectName", "projectId", "host", "source_bridge", "target_device"},
 		nil)
 
+	libvirtMetadataTitleDesc = prometheus.NewDesc(
+		prometheus.BuildFQName("libvirt", "metadata", "title"),
+		"The title from the domain",
+		[]string{"domain", "title"},
+		nil,
+	)
+
 	domainState = map[libvirt_schema.DomainState]string{
 		libvirt_schema.DOMAIN_NOSTATE:     "no state",
 		libvirt_schema.DOMAIN_RUNNING:     "the domain is running",
@@ -195,7 +204,7 @@ func NewLibvirtExporter(uri string, driver libvirt.ConnectURI) (*LibvirtExporter
 	}, nil
 }
 
-// DomainFromLibvirt retrives all domains from the libvirt socket and enriches them with some meta information.
+// DomainsFromLibvirt DomainFromLibvirt retrives all domains from the libvirt socket and enriches them with some meta information.
 func DomainsFromLibvirt(l *libvirt.Libvirt) ([]domainMeta, error) {
 	domains, _, err := l.ConnectListAllDomains(1, 0)
 	if err != nil {
@@ -249,7 +258,7 @@ func CollectFromLibvirt(ch chan<- prometheus.Metric, uri string, driver libvirt.
 	}
 	defer conn.Close()
 
-	l := libvirt.New(conn)
+	l := libvirt.NewWithDialer(dialers.NewAlreadyConnected(conn))
 	if err = l.ConnectToURI(driver); err != nil {
 		logger.Error("failed to connect", zap.Error(err))
 		return err
@@ -331,11 +340,40 @@ func CollectDomain(ch chan<- prometheus.Metric, l *libvirt.Libvirt, domain domai
 		return nil
 	}
 
-	for _, collectFunc := range []collectFunc{CollectDomainBlockDeviceInfo, CollectDomainNetworkInfo, CollectDomainDomainStatInfo} {
+	for _, collectFunc := range []collectFunc{CollectDomainBlockDeviceInfo, CollectDomainNetworkInfo, CollectDomainDomainStatInfo, CollectDomainMetaTitleInfo} {
 		if err = collectFunc(ch, l, domain, promLabels); err != nil {
 			logger.Warn("failed to collect some domain info", zap.Error(err))
 		}
 	}
+
+	return nil
+}
+
+func CollectDomainMetaTitleInfo(ch chan<- prometheus.Metric, l *libvirt.Libvirt, domain domainMeta, labels []string) (err error) {
+
+	// https://libvirt.org/html/libvirt-libvirt-domain.html
+	const (
+		// VIR_DOMAIN_METADATA_TITLE
+		domainMetaDataTile = 1
+	)
+
+	//VIR_DOMAIN_AFFECT_CURRENT
+	metaDataTitle, err := l.DomainGetMetadata(
+		domain.libvirtDomain,
+		domainMetaDataTile,
+		nil,
+		libvirt.DomainAffectCurrent,
+	)
+	if err != nil {
+		return err
+	}
+
+	ch <- prometheus.MustNewConstMetric(
+		libvirtMetadataTitleDesc,
+		prometheus.GaugeValue,
+		1,
+		domain.domainName, metaDataTitle,
+	)
 
 	return nil
 }
