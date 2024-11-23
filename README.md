@@ -7,22 +7,20 @@ By default, this exporter listens on TCP port 9000,Path '/metrics',to expose met
 # Building and running
 
 ## Requirements
-1. Gorelease: `go install github.com/goreleaser/goreleaser`
+1. Gorelease: `brew install goreleaser/tap/goreleaser`
 
-2. Taskfile: `go install github.com/go-task/task/v3/cmd/task@latest`
+2. Taskfile: `brew install go-task/tap/go-task`
 
-## use go dep(depressed)
-1. install go dep
+## Development
 
-2. cp $GOPATH/bin/dep /usr/bin/
+1. go mod download 
 
-3. dep ensure
+2. go build prometheus-libvirt-exporter.go
 
-4. go build prometheus-libvirt-exporter.go
-
-5. ./prometheus-libvirt-exporter
+3. ./prometheus-libvirt-exporter
 
 ## Building
+
 1. Run `task build`
 
 2. Afterwards all packages, binaries and archives are available in the `dist/` folder

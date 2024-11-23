@@ -6,9 +6,9 @@ env:
 
 tasks:
   build:
-    desc: Build project
+    desc: Build app
     env:
       EXPORTER_VERSION:
         sh: cat VERSION
     cmds:
-      - goreleaser release --rm-dist --snapshot
+      - goreleaser release --clean --snapshot
